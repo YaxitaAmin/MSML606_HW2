@@ -72,8 +72,10 @@ class HomeWork2:
     # treat parentheses as individual elements in the returned list (see output)
 
     def infixNotationPrint(self, head: TreeNode) -> list:
-        if head is None:
+        if head is None: #error5 assert homework2.infixNotationPrint(root) == exp_in.split(","), f"P2-{i} infix failed" may be left or right can be empty as edge case
             return []
+        if head.left is None and head.right is None:
+            return [head.val]
         else:
             return ['('] + self.infixNotationPrint(head.left) + [head.val] + self.infixNotationPrint(head.right) + [')'] # left - head- right
 
@@ -101,8 +103,8 @@ class Stack:
 
     def __init__(self):
         # TODO: initialize the stack
-        pass
-
+        self.node = []
+        self.top = -1
     # Problem 3: Write code to evaluate a postfix expression using stack and return the integer value
     # Use stack which you implemented above for this problem
 
@@ -116,10 +118,36 @@ class Stack:
 
     # DO NOT USE EVAL function for evaluating the expression
 
-    def evaluatePostfix(exp: str) -> int:
+    def evaluatePostfix(self, exp: str) -> int:
         # TODO: implement this using your Stack class
-        pass
-
+        operators = {"+", "-", "*", "/"}
+        values = exp.split()
+        
+        for value in values:
+            if value not in operators:
+                self.node.append(int(value))
+                self.top +=1
+            else:
+                # n_right = self.node[self.top]  File "e:\MSML606\msml606_hw2_spring26\HW2.py", line 209, in <module> assert result == expected, f"Test {idx} failed: {result} != {expected}" ssertionError: Test 1 failed: 5 != 14
+                n_right = self.node.pop()
+                self.top -=1
+                
+                n_left = self.node.pop()
+                self.top-=1
+                
+                if value== '+':
+                    ans = n_left + n_right
+                elif value== '-':
+                    ans = n_left - n_right
+                elif value== '*':
+                    ans = n_left * n_right
+                elif value== '/':
+                    if n_right == 0:raise ZeroDivisionError("devide by zero")
+                    ans = n_left // n_right
+                self.node.append(ans)
+                self.top +=1
+        return self.node[self.top]
+        
 
 # Main Function. Do not edit the code below
 if __name__ == "__main__":
