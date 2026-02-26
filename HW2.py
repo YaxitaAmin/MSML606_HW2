@@ -24,7 +24,31 @@ class HomeWork2:
     #     3   4
 
     def constructBinaryTree(self, input) -> TreeNode:
-        pass
+        tree1 = []
+        operators = {"+", "-", "*", "/"}
+        top = -1
+        for value in input:
+            if value not in operators:
+                node = TreeNode(value)
+                tree1.append(node)
+                top-=1
+            else:
+                node_r = tree1.pop()
+                node_l = tree1.pop()
+                #error as noticed trying to pop elements without changing top so top-2
+                top-=2
+                node = TreeNode(value)
+                node.left = node_l
+                node.right = node_r
+                tree1.append(node)
+                top+=1
+        return tree1[top]
+
+
+                
+                 
+        
+        
 
 
 
