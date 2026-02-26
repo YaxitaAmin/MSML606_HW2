@@ -31,11 +31,11 @@ class HomeWork2:
             if value not in operators:
                 node = TreeNode(value)
                 tree1.append(node)
-                top-=1
+                top+=1 #erro2 doing top-=1 realized top goes up not down
             else:
                 node_r = tree1.pop()
                 node_l = tree1.pop()
-                #error as noticed trying to pop elements without changing top so top-2
+                #error1 as noticed trying to pop elements without changing top so top-2
                 top-=2
                 node = TreeNode(value)
                 node.left = node_l
@@ -43,14 +43,6 @@ class HomeWork2:
                 tree1.append(node)
                 top+=1
         return tree1[top]
-
-
-                
-                 
-        
-        
-
-
 
     # Problem 2.1: Use pre-order traversal (root, left, right) to generate prefix notation
     # return an array of elements of a prefix expression
