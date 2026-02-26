@@ -50,7 +50,17 @@ class HomeWork2:
     # you can see the examples in p2_traversals.csv
 
     def prefixNotationPrint(self, head: TreeNode) -> list:
-        pass
+        if head is None:
+            return []
+        else:
+            tree2 =[]
+            # headN= tree2.append(head.val)
+            # leftN = tree2.append(self.prefixNotationPrint(head.left))
+            # rightN=tree2.append(self.prefixNotationPrint(head.right))
+            
+            #erro3 trying to do preorder in right,left but it should be left,right
+            #error4 using apend in recursive result which gave me nested list 
+            return [head.val] + self.prefixNotationPrint(head.left) + self.prefixNotationPrint(head.right)
 
     # Problem 2.2: Use in-order traversal (left, root, right) for infix notation with appropriate parentheses.
     # return an array of elements of an infix expression
