@@ -53,26 +53,29 @@ class HomeWork2:
         if head is None:
             return []
         else:
-            tree2 =[]
+            # tree2 =[]
             # headN= tree2.append(head.val)
             # leftN = tree2.append(self.prefixNotationPrint(head.left))
             # rightN=tree2.append(self.prefixNotationPrint(head.right))
             
             #erro3 trying to do preorder in right,left but it should be left,right
-            #error4 using apend in recursive result which gave me nested list 
+            #error4 using apend in recursive result which gave me nested list therefor using + operator without .append()
+            
             return [head.val] + self.prefixNotationPrint(head.left) + self.prefixNotationPrint(head.right)
 
     # Problem 2.2: Use in-order traversal (left, root, right) for infix notation with appropriate parentheses.
     # return an array of elements of an infix expression
     # expected output for the tree from problem 1 is [(,(,3,+,4,),*,2,)]
     # you can see the examples in p2_traversals.csv
-
     # don't forget to add parentheses to maintain correct sequence
     # even the outermost expression should be wrapped
     # treat parentheses as individual elements in the returned list (see output)
 
     def infixNotationPrint(self, head: TreeNode) -> list:
-        pass
+        if head is None:
+            return []
+        else:
+            return ['('] + self.infixNotationPrint(head.left) + [head.val] + self.infixNotationPrint(head.right) + [')'] # left - head- right
 
 
     # Problem 2.3: Use post-order traversal (left, right, root) to generate postfix notation.
@@ -81,7 +84,10 @@ class HomeWork2:
     # you can see the examples in p2_traversals.csv
 
     def postfixNotationPrint(self, head: TreeNode) -> list:
-        pass
+        if head is None:
+            return []
+        else:
+            return self.postfixNotationPrint(head.left) + self.postfixNotationPrint(head.right)  + [head.val]# left -  right - head
 
 
 class Stack:
