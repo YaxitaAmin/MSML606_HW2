@@ -70,7 +70,7 @@ Python's int() function natively handles negative numbers like -3, so no special
 
 ### EC7: Very Large Numbers
 
-## Python has no integer overflow unlike languages like C or Java. Large numbers like 999999999 \* 999999999 are handled natively without any special handling needed.
+Python has no integer overflow unlike languages like C or Java. Large numbers like 999999999 \* 999999999 are handled natively without any special handling needed.
 
 ## AI Usage Statement
 
