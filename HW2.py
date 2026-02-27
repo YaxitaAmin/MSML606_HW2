@@ -38,8 +38,8 @@ class HomeWork2:
                 top+=1 #erro2 doing top-=1 realized top goes up not down
             else:
                 try:
-                    node_r = tree1.pop()
-                    node_l = tree1.pop()
+                    node_r = tree1.pop() #rightside of node
+                    node_l = tree1.pop() #left node
                 except IndexError:
                     raise ValueError("indexerror pop from EMPTY list")
                 #error1 as noticed trying to pop elements without changing top so top-2
