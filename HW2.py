@@ -29,12 +29,19 @@ class HomeWork2:
         top = -1
         for value in input:
             if value not in operators:
+                try:
+                    float(value)
+                except ValueError:
+                    raise ValueError("invalid token"+ value)
                 node = TreeNode(value)
                 tree1.append(node)
                 top+=1 #erro2 doing top-=1 realized top goes up not down
             else:
-                node_r = tree1.pop()
-                node_l = tree1.pop()
+                try:
+                    node_r = tree1.pop()
+                    node_l = tree1.pop()
+                except IndexError:
+                    raise ValueError("indexerror pop from EMPTY list")
                 #error1 as noticed trying to pop elements without changing top so top-2
                 top-=2
                 node = TreeNode(value)
@@ -42,6 +49,8 @@ class HomeWork2:
                 node.right = node_r
                 tree1.append(node)
                 top+=1
+        if len(tree1)!=1:
+            raise ValueError("too many operators")
         return tree1[top]
 
     # Problem 2.1: Use pre-order traversal (root, left, right) to generate prefix notation
@@ -122,13 +131,22 @@ class Stack:
         # TODO: implement this using your Stack class
         operators = {"+", "-", "*", "/"}
         values = exp.split()
-        
+        if len(values) ==0: #checking empty list
+            raise ValueError("empty stack")
         for value in values:
+
             if value not in operators:
+                try:
+                    float(value)
+                except ValueError:
+                    raise ValueError("invalid token"+ value)
                 self.node.append(int(value))
                 self.top +=1
             else:
                 # n_right = self.node[self.top]  File "e:\MSML606\msml606_hw2_spring26\HW2.py", line 209, in <module> assert result == expected, f"Test {idx} failed: {result} != {expected}" ssertionError: Test 1 failed: 5 != 14
+                #checking stack underflow
+                if self.top < 1:
+                    raise ValueError("too many operators")
                 n_right = self.node.pop()
                 self.top -=1
                 
@@ -146,6 +164,12 @@ class Stack:
                     ans = n_left // n_right
                 self.node.append(ans)
                 self.top +=1
+        # if len(values) ==0:
+        #     raise ValueError("too many operators")
+        #error7 try to check len value after loop which not logical move
+        if self.top != 0:      # if more than 1 item left on stack top = 0 → valid top > 0 → too many operands top = -1 → empty expression / too many operators
+            raise ValueError("too many operand")
+        
         return self.node[self.top]
         
 
@@ -213,3 +237,131 @@ if __name__ == "__main__":
         except ZeroDivisionError:
             assert expected == "DIVZERO", f"Test {idx} unexpected division by zero"
             print(f"Test case {idx} passed (division by zero handled)")
+    print("\nRUNNING EDGE CASE TESTS FOR PROBLEM 4")
+
+    # EC1: empty stack postfix expression
+    #empty string split() gives empty listand len==0 so we raise ValueError before loop
+    try:
+        s = Stack()
+        s.evaluatePostfix("")
+        print("EC1 fail")
+    except ValueError as e:
+        print(f"EC1 passed  empty expression: {e}")
+
+    # EC2 invalid token - letter instead of number
+    #float("abc") raises ValueError which we catch and re-raise with message
+    try:
+        s = Stack()
+        s.evaluatePostfix("3 abc +")
+    except ValueError as e:
+        print(f"EC2 passed invalid token caught: {e}")
+
+    # EC3too few operands - operator appears before two numbers are on stack
+    # self.top < 1 check catches this before popping from stack
+    try:
+        s = Stack()
+        s.evaluatePostfix("+ 3 4")
+        print("EC3 FAILED")
+    except ValueError as e:
+        print(f"EC3 passed few operands caught: {e}")
+
+    # EC4 many operands - extra number left on stack after evaluation
+    # self.top != 0 check after loop catches leftover operands
+    try:
+        s = Stack()
+        s.evaluatePostfix("3 4 5 +")
+        print("EC4 fail")
+    except ValueError as e:
+        print(f"EC4 passed too many operands caught: {e}")
+
+    # EC5division by zero
+    # we check if n_right == 0 before dividing and raise ZeroDivisionError
+    try:
+        s = Stack()
+        s.evaluatePostfix("5 0 /")
+        print("EC5 fail")
+    except ZeroDivisionError as e:
+        print(f"EC5 passed division by zero : {e}")
+
+# REPORT IN README
+# OUTPUT
+
+# PS E:\MSML606\msml606_hw2_spring26> & C:/Users/YAXITA/AppData/Local/Programs/Python/Python310/python.exe e:/MSML606/msml606_hw2_spring26/HW2.py
+
+# RUNNING TEST CASES FOR PROBLEM 1
+# P1 Test 1 passed
+# P1 Test 2 passed
+# P1 Test 3 passed
+# P1 Test 4 passed
+# P1 Test 5 passed
+# P1 Test 6 passed
+# P1 Test 7 passed
+# P1 Test 8 passed
+# P1 Test 9 passed
+# P1 Test 10 passed
+# P1 Test 11 passed
+# P1 Test 12 passed
+# P1 Test 13 passed
+# P1 Test 14 passed
+# P1 Test 15 passed
+# P1 Test 16 passed
+# P1 Test 17 passed
+# P1 Test 18 passed
+# P1 Test 19 passed
+# P1 Test 20 passed
+# P1 Test 21 passed
+
+# RUNNING TEST CASES FOR PROBLEM 2
+# P2 Test 1 passed
+# P2 Test 2 passed
+# P2 Test 3 passed
+# P2 Test 4 passed
+# P2 Test 5 passed
+# P2 Test 6 passed
+# P2 Test 7 passed
+# P2 Test 8 passed
+# P2 Test 9 passed
+# P2 Test 10 passed
+# P2 Test 11 passed
+# P2 Test 12 passed
+# P2 Test 13 passed
+# P2 Test 14 passed
+# P2 Test 15 passed
+# P2 Test 16 passed
+# P2 Test 17 passed
+# P2 Test 18 passed
+# P2 Test 19 passed
+# P2 Test 20 passed
+# P2 Test 21 passed
+# P2 Test 22 passed
+
+# RUNNING TEST CASES FOR PROBLEM 3
+# Test case 1 passed
+# Test case 2 passed
+# Test case 3 passed
+# Test case 4 passed
+# Test case 5 passed
+# Test case 6 passed
+# Test case 7 passed
+# Test case 8 passed
+# Test case 9 passed
+# Test case 10 passed
+# Test case 11 passed
+# Test case 12 passed
+# Test case 13 passed
+# Test case 14 passed
+# Test case 15 passed
+# Test case 16 passed
+# Test case 17 passed
+# Test case 18 passed
+# Test case 19 passed
+# Test case 20 passed
+# Test case 21 passed (division by zero handled)
+# Test case 22 passed (division by zero handled)
+
+# RUNNING EDGE CASE TESTS FOR PROBLEM 4
+# EC1 passed  empty expression: empty stack
+# EC2 passed invalid token caught: invalid tokenabc
+# EC3 passed few operands caught: too many operators
+# EC4 passed too many operands caught: too many operand
+# EC5 passed division by zero : devide by zero
