@@ -64,7 +64,13 @@ After the loop, if `self.top != 0` it means more than one item is left on the st
 
 Before performing division, I check if `n_right == 0` and raise a `ZeroDivisionError` with a message to prevent a crash.
 
----
+### EC6: Negative Numbers
+
+Python's int() function natively handles negative numbers like -3, so no special handling was needed. The expression "-3 4 +" evaluates correctly as 1.
+
+### EC7: Very Large Numbers
+
+## Python has no integer overflow unlike languages like C or Java. Large numbers like 999999999 \* 999999999 are handled natively without any special handling needed.
 
 ## AI Usage Statement
 

@@ -260,7 +260,7 @@ if __name__ == "__main__":
     # self.top < 1 check catches this before popping from stack
     try:
         s = Stack()
-        s.evaluatePostfix("+ 3 4")
+        s.evaluatePostfix("+")
         print("EC3 FAILED")
     except ValueError as e:
         print(f"EC3 passed few operands caught: {e}")
