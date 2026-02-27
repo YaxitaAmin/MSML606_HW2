@@ -54,7 +54,7 @@ If a token like `"abc"` appears that is not an operator, I try `float(value)` wh
 
 ### EC3: Too Few Operands (Stack Underflow)
 
-If an operator appears before enough numbers are on the stack (e.g., `"+ 3 4"`), `self.top < 1` will be True, so I raise a `ValueError` before attempting to pop.
+If an operator appears before enough numbers are on the stack (e.g., `"+ 3 `), `self.top < 1` will be True, so I raise a `ValueError` before attempting to pop.
 
 ### EC4: Too Many Operands
 
